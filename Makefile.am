@@ -4,7 +4,7 @@ lib_LTLIBRARIES = \
 	libManagerContainer.la
 
 BUILT_SOURCES = \
-	testexternals.C
+	testexternals.cpp
 
 INCLUDES = \
 	-I$(includedir)

@@ -1,7 +1,7 @@
 #ifndef __MANAGER_CONTAINER_HH__
 #define __MANAGER_CONTAINER_HH__
 
-#include "Manager.hh"
+#include "Manager.hpp"
 #include <map>
 #include <boost/shared_ptr.hpp>
 

@@ -1,4 +1,4 @@
-#include "ManagerContainer.hh"
+#include "ManagerContainer.hpp"
 
 #include <vector>
 #include <boost/scoped_ptr.hpp>
@@ -20,7 +20,7 @@ int main()
       names.push_back("thomas");
       names.push_back("timo");
       
-      vector<string>::iterator iter = names.begin();
+      auto iter = names.begin();
       
       for ( ; iter != names.end(); iter++)
 	{
