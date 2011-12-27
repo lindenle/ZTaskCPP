@@ -24,8 +24,8 @@ struct client_two
   void operator()(bool selected, string name) const
   {
     cout << "client_two: " << name << " is ";
-    if (enabled)
-      cout << "enabled";
+    if (selected)
+      cout << "selected";
     else
       cout << "deselected";
     cout << endl;
@@ -45,17 +45,26 @@ int main()
       names.push_back("alex");
       names.push_back("thomas");
       names.push_back("timo");
-      
+      names.push_back("kaley");
+      names.push_back("qannik");
+      names.push_back("marbles");
+
       auto iter = names.begin();
       
       for ( ; iter != names.end(); iter++)
 	{
 	  mc->add_manager(*iter);
+
 	  mc->connect_client(client_one(),*iter);
 	  mc->connect_client(client_two(),*iter);
+
 	  if ( ( rand() % 100 ) > 49 )
 	    {
 	      mc->select_manager(*iter);
+	    }
+	  else
+	    {
+	      mc->desel_manager(*iter);
 	    }
 	}
       iter = names.begin();
