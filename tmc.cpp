@@ -8,26 +8,26 @@ using namespace std;
 
 struct client_one
 {
-  void operator()(bool enabled,string name) const
+  void operator()(bool selected,string name) const
   {
-    cout << "client_one " << name << " is ";
-    if (enabled)
-      cout << "enabled";
+    cout << "client_one: " << name << " is ";
+    if (selected)
+      cout << "selected";
     else
-      cout <<  "disabled";
+      cout << "deselected";
     cout << endl;
   }
 };
 
 struct client_two
 {
-  void operator()(bool enabled,string name) const
+  void operator()(bool selected, string name) const
   {
-    cout << "client_two " << name << " is ";
+    cout << "client_two: " << name << " is ";
     if (enabled)
       cout << "enabled";
     else
-      cout <<  "disabled";
+      cout << "deselected";
     cout << endl;
   }
 };
