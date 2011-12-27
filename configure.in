@@ -1,0 +1,21 @@
+AC_INIT(configure.in)
+
+AM_INIT_AUTOMAKE(ManagerContainer, 1.00)
+
+dnl just in case you ever run on Solaris use CC
+AC_PROG_CXX(g++)
+dnl MGW - on my Mac libtool tries to link to the C libraries if I
+dnl don't specify this, resulting in testexternals failing at link-time
+AC_PROG_CC(g++)
+
+dnl build no static libraries
+AC_ENABLE_STATIC(no)
+AC_PROG_LIBTOOL
+
+dnl   no point in suppressing warnings people should 
+dnl   at least see them, so here we go for g++: -Wall
+if test $ac_cv_prog_gxx = yes; then
+   CXXFLAGS="$CXXFLAGS -Wall"
+fi
+
+AC_OUTPUT(Makefile)
