@@ -16,19 +16,21 @@ include_HEADERS = \
 noinst_PROGRAMS = \
 	testexternals
 
-bin_PROGRAMS=\
+bin_PROGRAMS = \
 	tmc
 
 tmc_LDADD = \
-        libManagerContainer.la
+        libManagerContainer.la \
+	-lboost_signals
 
 tmc_SOURCES=\
 	tmc.cpp
 
 testexternals_LDADD = \
-        libManagerContainer.la
+        libManagerContainer.la \
+	-lboost_signals
 
-textexternal_SOURCES= \
+textexternals_SOURCES= \
 	testexternals.cpp 
 
 libManagerContainer_la_SOURCES = \

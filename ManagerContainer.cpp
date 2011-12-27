@@ -4,7 +4,7 @@ void ManagerContainer::add_manager(string name)
 {
   if ( ! _manager_exists(name) )
     {
-      boost::shared_ptr<Manager> manager(new Manager); 
+      boost::shared_ptr<Manager> manager(new Manager(name)); 
       _manager_map.insert(std::make_pair(name, manager));
     }
   // should we throw an exception if trying to add one that exist?
@@ -49,4 +49,19 @@ bool ManagerContainer::_manager_exists(string name)
       return true;
     }
   return false;
+}
+
+Manager::connection_t ManagerContainer::connect_client( Manager::signal_t::slot_function_type client, 
+							 string name)
+{
+  if ( _manager_exists(name) )
+    return _manager_map.find(name)->second->connect_client(client);
+
+}
+
+void ManagerContainer::disconnect_client(Manager::connection_t client, string name)
+{
+  if ( _manager_exists(name) )
+    return _manager_map.find(name)->second->disconnect_client(client);
+
 }

@@ -6,6 +6,32 @@
 
 using namespace std;
 
+struct client_one
+{
+  void operator()(bool enabled,string name) const
+  {
+    cout << "client_one " << name << " is ";
+    if (enabled)
+      cout << "enabled";
+    else
+      cout <<  "disabled";
+    cout << endl;
+  }
+};
+
+struct client_two
+{
+  void operator()(bool enabled,string name) const
+  {
+    cout << "client_two " << name << " is ";
+    if (enabled)
+      cout << "enabled";
+    else
+      cout <<  "disabled";
+    cout << endl;
+  }
+};
+
 int main()
 {
 
@@ -25,6 +51,8 @@ int main()
       for ( ; iter != names.end(); iter++)
 	{
 	  mc->add_manager(*iter);
+	  mc->connect_client(client_one(),*iter);
+	  mc->connect_client(client_two(),*iter);
 	  if ( ( rand() % 100 ) > 49 )
 	    {
 	      mc->select_manager(*iter);

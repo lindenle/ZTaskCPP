@@ -15,11 +15,14 @@ class ManagerContainer
   typedef map<string,boost::shared_ptr<Manager> > ManagerMap;
 
   void add_manager(string name);
-  // void add_client(Client client, string manager);
-  //  void rm_client(Client client, string manager);
   void del_manager(string name);
+
+  Manager::connection_t connect_client(Manager::signal_t::slot_function_type client, string name);
+  void disconnect_client(Manager::connection_t client, string name);
+
   void select_manager(string name);
   void desel_manager(string name);
+
   bool check_manager(string name);
   
  private:
