@@ -5,13 +5,15 @@
 
 using namespace std;
 
-class Manager
+class Manager 
 {
  public:
 
   //typedef vector<Client> ClientList;
 
-  Manager(){;}
+  Manager():  
+    _selected(false)
+  {;}
   ~Manager(){;}
   const bool get_selected(void){return _selected;}
   void set_selected(bool s){_selected = s;}

@@ -10,8 +10,8 @@ INCLUDES = \
 	-I$(includedir)
 
 include_HEADERS = \
-	Manager.hh \
-	ManagerContainer.hh
+	Manager.hpp \
+	ManagerContainer.hpp
 
 noinst_PROGRAMS = \
 	testexternals
@@ -23,22 +23,22 @@ tmc_LDADD = \
         libManagerContainer.la
 
 tmc_SOURCES=\
-	tmc.cc
+	tmc.cpp
 
 testexternals_LDADD = \
         libManagerContainer.la
 
 textexternal_SOURCES= \
-	testexternals.cc 
+	testexternals.cpp 
 
 libManagerContainer_la_SOURCES = \
-	Manager.cc \
-	ManagerContainer.cc
+	Manager.cpp \
+	ManagerContainer.cpp
 
 libManagerContainer_la_LIBADD = \
 	-L$(libdir) 
 
-testexternals.cc:
+testexternals.cpp:
 	echo "//*** this is a generated file. Do not commit, do not edit" > $@
 	echo "int main()" >> $@	
 	echo "{" >> $@
