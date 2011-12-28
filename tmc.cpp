@@ -8,6 +8,8 @@
 
 using namespace std;
 
+/// tmc.cpp is a test of the features of the design
+
 int main()
 {
 
@@ -59,5 +61,15 @@ int main()
 	  cout << "manager: " << *iter << " is not selected " << endl; 
 	}
     }
-  names.clear();
+
+  cout << "Testing list set" << endl;
+
+  vector<string> sel_names;
+  sel_names.push_back("kaley");
+  sel_names.push_back("qannik");
+  sel_names.push_back("marbles");
+  sel_names.push_back("boo");
+
+  mc->select_managers(sel_names);
+  
 }

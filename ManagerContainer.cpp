@@ -38,6 +38,30 @@ void ManagerContainer::select_manager(const string & name) throw(ManagerNotExist
     throw(_not_exists);
 }
 
+void ManagerContainer::select_managers(const vector<string> & list) throw(ManagerNotExists)
+{
+  //first deselect all
+  auto miter = _manager_map.begin();
+  for ( ; miter != _manager_map.end(); miter++ )
+    {
+	  desel_manager(miter->first); 
+    }
+  //then select those in the list
+  auto liter = list.begin();
+  for ( ; liter != list.end(); liter++ )
+    {
+      try 
+	{
+	  select_manager(*liter); 
+	}
+      catch ( ... )
+	{
+	  throw(_not_exists);
+	}
+    }
+    
+}
+
 void ManagerContainer::desel_manager(const string & name) throw(ManagerNotExists)
 {
   if ( _manager_exists(name) )

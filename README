@@ -1,0 +1,14 @@
+This code is configured using the autogen.sh bash script, it uses
+libtoolize, aitomake and autogen to create a configure script which is
+run to produce a makefile. I did not have access to VisualStudio so I
+have not tested it in this IDE.
+
+This code has been compiled with gcc v. 4.6.1. 
+
+The options "-Wall" and "-std=c++0x" were used.
+
+The code produces a library that is called libManagerContainer.so.
+
+The tmc.cpp code is compiled and linked against this library as an
+example/test of the features in the design.
+

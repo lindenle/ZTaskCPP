@@ -34,6 +34,9 @@ class ManagerContainer
   /// select_manager :  toggle the selected state to true for a manager.
   void select_manager(const string & name) throw(ManagerNotExists);
 
+  /// set a list of managers to be selected.
+  void select_managers(const vector<string> & list) throw(ManagerNotExists);
+
   /// desel_manager :  toggle the selected state to false for a manager.
   void desel_manager(const string & name) throw(ManagerNotExists);
 
