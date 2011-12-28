@@ -5,7 +5,7 @@ const bool Manager::get_selected(void)
   return _selected;
 }
 
-void Manager::set_selected(bool selected)
+void Manager::set_selected(const bool & selected)
 {
   _selected = selected;
   _signal(_selected,_name);

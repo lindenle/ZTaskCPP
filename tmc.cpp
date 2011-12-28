@@ -11,13 +11,14 @@ using namespace std;
 int main()
 {
 
-  for ( int i = 0 ; i < 1000; i++ )
+  for ( int i = 0 ; i < 3; i++ )
     {
       cout << "==== loop " << i << " =====" << endl;
       boost::scoped_ptr<ManagerContainer> mc(new ManagerContainer);
 
       vector<string> names;
       
+      names.push_back("alex");
       names.push_back("alex");
       names.push_back("thomas");
       names.push_back("timo");

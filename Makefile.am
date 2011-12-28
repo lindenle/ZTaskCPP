@@ -9,6 +9,7 @@ INCLUDES = \
 include_HEADERS = \
 	Client.hpp \
 	Manager.hpp \
+	ManagerContainerExceptions.hpp \
 	ManagerContainer.hpp
 
 bin_PROGRAMS = \
