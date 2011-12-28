@@ -1,5 +1,5 @@
-#ifndef __MANAGER_HH__
-#define __MANAGER_HH__
+#ifndef __MANAGER_HPP__
+#define __MANAGER_HPP__
 
 #include <string>
 #include <boost/signal.hpp>
@@ -37,4 +37,4 @@ class Manager
 
 };
 
-#endif // __MANAGER_HH__
+#endif // __MANAGER_HPP__

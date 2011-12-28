@@ -1,36 +1,12 @@
 #include "ManagerContainer.hpp"
+#include "Client.hpp"
 
 #include <vector>
 #include <boost/scoped_ptr.hpp>
+#include <boost/bind.hpp>
 #include <cstdlib>
 
 using namespace std;
-
-struct client_one
-{
-  void operator()(bool selected,string name) const
-  {
-    cout << "client_one: " << name << " is ";
-    if (selected)
-      cout << "selected";
-    else
-      cout << "deselected";
-    cout << endl;
-  }
-};
-
-struct client_two
-{
-  void operator()(bool selected, string name) const
-  {
-    cout << "client_two: " << name << " is ";
-    if (selected)
-      cout << "selected";
-    else
-      cout << "deselected";
-    cout << endl;
-  }
-};
 
 int main()
 {
@@ -55,8 +31,12 @@ int main()
 	{
 	  mc->add_manager(*iter);
 
-	  mc->connect_client(client_one(),*iter);
-	  mc->connect_client(client_two(),*iter);
+	  boost::shared_ptr<Client> c1(new Client("Client-one"));	  
+	  boost::shared_ptr<Client> c2(new Client("Client-two"));
+
+	  mc->connect_client(boost::bind(&Client::manager_update,c1,_1,_2), *iter);
+	  mc->connect_client(boost::bind(&Client::manager_update,c2,_1,_2), *iter);
+
 
 	  if ( ( rand() % 100 ) > 49 )
 	    {
