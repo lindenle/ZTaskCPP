@@ -6,20 +6,29 @@
 
 using namespace std;
 
+/// Manager class. Holds the state of selection and the name of the
+/// manager. Obviously in a more complicated setting there would be
+/// internal logic and data for each manager. In such a case this
+/// would be converted to a bse class.
+
 class Manager 
 {
  public:
 
+  /// typedef for signal type
   typedef boost::signal<void (bool enabled, string name )> signal_t;
 
+  /// typedef for connection type
   typedef boost::signals::connection connection_t;
 
+  /// constructor with one parameter that is the name of the manager 
   Manager(string name="default"):  
     _selected(false)
   {
     set_name(name);
   }
 
+  /// destructor
   ~Manager(){;}
 
   /// get_name : retrieve the name of the manager

@@ -1,5 +1,15 @@
 #include "ManagerContainer.hpp"
 
+ManagerContainer * ManagerContainer::_instance = nullptr;
+
+ManagerContainer * ManagerContainer::Instance()
+{
+  if ( ! _instance )
+    _instance = new ManagerContainer();
+
+  return _instance;
+}
+      
 void ManagerContainer::add_manager(const string& name) throw(ManagerExists)
 {
   if ( ! _manager_exists(name) )

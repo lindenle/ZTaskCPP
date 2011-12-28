@@ -10,19 +10,19 @@
 /// The ManagerContainer class is a singleton that manages all manager
 /// classes. It allows adding, removing and setting the selection
 /// state of a manager. It also allows clients to connect to a given
-/// manager.
+/// managers update signal.
 
 class ManagerContainer
 {
-  // should this be a singleton?
  public:
 
-  //  static ManagerContainer * Instance();
+  /// return an instance of MangerContainer singleton, or create one if none exists.
+  static ManagerContainer * Instance();
   
-  ManagerContainer(){;}
+  /// destructor clears the map
+  ~ManagerContainer(){ _manager_map.clear() ;}
 
-  ~ManagerContainer(){;}
-
+  ///ManagerMap type declaration
   typedef map<string,boost::shared_ptr<Manager> > ManagerMap;
 
   /// add_manager : Add a new manager the manager is created.
@@ -47,7 +47,16 @@ class ManagerContainer
   ///disconnect_client : disconnect a client slot from a managare signal by name.
   void disconnect_client(Manager::connection_t client, const string & name) throw(ManagerNotExists);
 
- private:
+private:
+
+  /// constructor is private for a singleton
+  ManagerContainer(){;}
+
+  /// copy constructor is private for a singleton
+  ManagerContainer(const ManagerContainer & mc);
+
+  /// operator=() is private for a singleton
+  ManagerContainer operator=(ManagerContainer);
 
   /// _manager_exists : provate function to verify the existence of a manger in the map
   bool _manager_exists(const string & name);
@@ -61,6 +70,8 @@ class ManagerContainer
   ///_not_exists : exception to be thrown when a manger does not exist and should.
   ManagerNotExists _not_exists;
 
-  //  static ManagerContainer *
+  /// holds the instance of the singleton
+  static ManagerContainer * _instance;
+
 };
 #endif //__MANAGER_CONTAINER_HPP__
