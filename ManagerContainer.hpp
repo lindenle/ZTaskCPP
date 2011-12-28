@@ -3,6 +3,7 @@
 
 #include "Manager.hpp"
 #include "ManagerContainerExceptions.hpp"
+
 #include <map>
 #include <boost/shared_ptr.hpp>
 
@@ -15,7 +16,8 @@ class ManagerContainer
 {
   // should this be a singleton?
  public:
-  //  static ManagerContainer * _instance
+
+  //  static ManagerContainer * Instance();
   
   ManagerContainer(){;}
 
@@ -24,25 +26,26 @@ class ManagerContainer
   typedef map<string,boost::shared_ptr<Manager> > ManagerMap;
 
   /// add_manager : Add a new manager the manager is created.
-  void add_manager(const string & name);
+  void add_manager(const string & name) throw(ManagerExists);
 
   /// del_manager : Delete a manager.
-  void del_manager(const string & name);
+  void del_manager(const string & name) throw(ManagerNotExists);
 
   /// select_manager :  toggle the selected state to true for a manager.
-  void select_manager(const string & name);
+  void select_manager(const string & name) throw(ManagerNotExists);
 
   /// desel_manager :  toggle the selected state to false for a manager.
-  void desel_manager(const string & name);
+  void desel_manager(const string & name) throw(ManagerNotExists);
 
   /// check_manager :  get the selection state of a manager.
-  bool check_manager(const string & name);
+  bool check_manager(const string & name) throw(ManagerNotExists);
   
   ///connect_client : connect a client slot to a manager signal specified by name.
-  Manager::connection_t connect_client(Manager::signal_t::slot_function_type client, const string & name);
+  Manager::connection_t connect_client(Manager::signal_t::slot_function_type client, 
+				       const string & name) throw(ManagerNotExists);
 
   ///disconnect_client : disconnect a client slot from a managare signal by name.
-  void disconnect_client(Manager::connection_t client, const string & name);
+  void disconnect_client(Manager::connection_t client, const string & name) throw(ManagerNotExists);
 
  private:
 
@@ -58,5 +61,6 @@ class ManagerContainer
   ///_not_exists : exception to be thrown when a manger does not exist and should.
   ManagerNotExists _not_exists;
 
+  //  static ManagerContainer *
 };
 #endif //__MANAGER_CONTAINER_HPP__
