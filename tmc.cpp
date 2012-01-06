@@ -13,63 +13,72 @@ using namespace std;
 int main()
 {
 
-  ManagerContainer * mc = ManagerContainer::Instance();
-  
-  vector<string> names;
-  
-  names.push_back("alex");
-  names.push_back("thomas");
-  names.push_back("timo");
-  names.push_back("kaley");
-  names.push_back("qannik");
-  names.push_back("marbles");
-  names.push_back("boo");
-  names.push_back("foo");
-  names.push_back("bar");
-  
-  auto iter = names.begin();
-  
-  for ( ; iter != names.end(); iter++)
+  for ( int i=0; i < 10000; i++ )
     {
-      mc->add_manager(*iter);
+      cout << "====Iteration " << i << endl;
+
+      ManagerContainer * mc = ManagerContainer::Instance();
       
-      boost::shared_ptr<Client> c1(new Client("Client-one"));	  
-      boost::shared_ptr<Client> c2(new Client("Client-two"));
+      vector<string> names;
       
-      mc->connect_client(boost::bind(&Client::manager_update,c1,_1,_2), *iter);
-      mc->connect_client(boost::bind(&Client::manager_update,c2,_1,_2), *iter);
+      names.push_back("alex");
+      names.push_back("thomas");
+      names.push_back("timo");
+      names.push_back("kaley");
+      names.push_back("qannik");
+      names.push_back("marbles");
+      names.push_back("boo");
+      names.push_back("foo");
+      names.push_back("bar");
       
+      auto iter = names.begin();
       
-      if ( ( rand() % 100 ) > 49 )
+      for ( ; iter != names.end(); iter++)
 	{
-	  mc->select_manager(*iter);
+	  mc->add_manager(*iter);
+	  
+	  boost::shared_ptr<Client> c1(new Client("Client-one"));	  
+	  boost::shared_ptr<Client> c2(new Client("Client-two"));
+	  boost::shared_ptr<Client> c3(new Client("Client-three"));
+	  
+	  mc->connect_client(boost::bind(&Client::manager_update,c1,_1,_2), *iter);
+	  mc->connect_client(boost::bind(&Client::manager_update,c2,_1,_2), *iter);
+	  mc->connect_client(boost::bind(&Client::manager_update,c3,_1,_2), *iter);
+	  
+	  
+	  if ( ( rand() % 100 ) > 49 )
+	    {
+	      mc->select_manager(*iter);
+	    }
+	  else
+	    {
+	      mc->desel_manager(*iter);
+	    }
 	}
-      else
+      
+      iter = names.begin();
+      for ( ; iter != names.end(); iter++)
 	{
-	  mc->desel_manager(*iter);
+	  if ( mc->check_manager(*iter) )
+	    {
+	      cout << "manager: " << *iter << " is selected " << endl; 
+	    }
+	  else
+	    {
+	      cout << "manager: " << *iter << " is not selected " << endl; 
+	    }
 	}
+      names.clear();
+      cout << "Testing list set" << endl;
+      
+      vector<string> sel_names;
+      sel_names.push_back("kaley");
+      sel_names.push_back("qannik");
+      sel_names.push_back("marbles");
+      sel_names.push_back("boo");
+      
+      mc->select_managers(sel_names);
+      sel_names.clear();
+      
     }
-  iter = names.begin();
-  for ( ; iter != names.end(); iter++)
-    {
-      if ( mc->check_manager(*iter) )
-	{
-	  cout << "manager: " << *iter << " is selected " << endl; 
-	}
-      else
-	{
-	  cout << "manager: " << *iter << " is not selected " << endl; 
-	}
-    }
-
-  cout << "Testing list set" << endl;
-
-  vector<string> sel_names;
-  sel_names.push_back("kaley");
-  sel_names.push_back("qannik");
-  sel_names.push_back("marbles");
-  sel_names.push_back("boo");
-
-  mc->select_managers(sel_names);
-  
 }
