@@ -1,6 +1,6 @@
 #include "Manager.hpp"
 
-const bool Manager::get_selected(void)
+const bool Manager::get_selected(void) const
 {
   return _selected;
 }

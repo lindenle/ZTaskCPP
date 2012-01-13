@@ -38,7 +38,7 @@ class Manager
   void set_name(const string & name){ _name=name; }
 
   /// get_selected :get the selection state of the manager
-  const bool get_selected(void);
+  const bool get_selected(void) const;
 
   /// set_selected : set the selection state of the manger
   void set_selected(const bool & selected);

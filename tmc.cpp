@@ -19,32 +19,58 @@ int main()
 
       ManagerContainer * mc = ManagerContainer::Instance();
       
-      vector<string> names;
+      vector<string> names = {
+	"alex",
+	"thomas",
+	"timo",
+	"kaley",
+	"qannik",
+	"marbles",
+	"foo",
+	"bar"
+      };
       
-      names.push_back("alex");
-      names.push_back("thomas");
-      names.push_back("timo");
-      names.push_back("kaley");
-      names.push_back("qannik");
-      names.push_back("marbles");
-      names.push_back("boo");
-      names.push_back("foo");
-      names.push_back("bar");
       
       auto iter = names.begin();
       
       for ( ; iter != names.end(); iter++)
 	{
-	  mc->add_manager(*iter);
-	  
+	  try
+	    {
+	      mc->add_manager(*iter);
+	    }
+	  catch ( ManagerExists _error )
+	    {
+	      std::cerr << "could not add so deleting " << *iter << std::endl;
+	      try
+		{
+		  mc->del_manager(*iter);
+		}
+	      catch ( ManagerNotExists _error )
+		{
+		  std::cerr << "something is wrong" << *iter << std::endl;
+		  return -1;
+		}
+
+	      continue;
+	    }
+
 	  boost::shared_ptr<Client> c1(new Client("Client-one"));	  
 	  boost::shared_ptr<Client> c2(new Client("Client-two"));
 	  boost::shared_ptr<Client> c3(new Client("Client-three"));
 	  
-	  mc->connect_client(boost::bind(&Client::manager_update,c1,_1,_2), *iter);
-	  mc->connect_client(boost::bind(&Client::manager_update,c2,_1,_2), *iter);
-	  mc->connect_client(boost::bind(&Client::manager_update,c3,_1,_2), *iter);
-	  
+	  try 
+	    {
+	      mc->connect_client(boost::bind(&Client::manager_update,c1,_1,_2), *iter);
+	      mc->connect_client(boost::bind(&Client::manager_update,c2,_1,_2), *iter);
+	      mc->connect_client(boost::bind(&Client::manager_update,c3,_1,_2), *iter);
+	    }
+	  catch (ManagerNotExists _error )
+	    {
+	      std::cerr << "Could not connect" << std::endl;
+	      return -1;
+	    }
+	    
 	  
 	  if ( ( rand() % 100 ) > 49 )
 	    {
@@ -59,25 +85,41 @@ int main()
       iter = names.begin();
       for ( ; iter != names.end(); iter++)
 	{
-	  if ( mc->check_manager(*iter) )
+	  try 
 	    {
-	      cout << "manager: " << *iter << " is selected " << endl; 
+	      if ( mc->check_manager(*iter) )
+		{
+		  cout << "manager: " << *iter << " is selected " << endl; 
+		}
+	      else
+		{
+		  cout << "manager: " << *iter << " is not selected " << endl; 
+		}
 	    }
-	  else
+	  catch (ManagerNotExists _error )
 	    {
-	      cout << "manager: " << *iter << " is not selected " << endl; 
+	      cerr << "Cannot check if not in list" << endl;
 	    }
 	}
+
       names.clear();
       cout << "Testing list set" << endl;
       
-      vector<string> sel_names;
-      sel_names.push_back("kaley");
-      sel_names.push_back("qannik");
-      sel_names.push_back("marbles");
-      sel_names.push_back("boo");
+      vector<string> sel_names = {
+	"kaley",
+	"qannik",
+	"marbles",
+	"foo"
+      };
       
-      mc->select_managers(sel_names);
+      try
+	{
+	  mc->select_managers(sel_names);
+	}
+      catch (ManagerNotExists _error )
+	{
+	  cerr << "Skipping add by list" << endl;
+	}
       sel_names.clear();
       
     }

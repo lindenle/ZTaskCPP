@@ -61,7 +61,7 @@ private:
   /// operator=() is private for a singleton
   ManagerContainer operator=(ManagerContainer);
 
-  /// _manager_exists : provate function to verify the existence of a manger in the map
+  /// _manager_exists : private function to verify the existence of a manger in the map
   bool _manager_exists(const string & name);
 
   /// _manager_map : unique string id key to shared_ptr map. erasing the entry deletes the manager object.
