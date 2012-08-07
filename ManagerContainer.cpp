@@ -18,7 +18,7 @@ void ManagerContainer::add_manager(const string& name) throw(ManagerExists)
       _manager_map.insert(std::make_pair(name, manager));
     }
   else
-    throw(_exists);
+    throw(new ManagerExists());
 }
 
 void ManagerContainer::del_manager(const string& name) throw(ManagerNotExists)
@@ -27,7 +27,7 @@ void ManagerContainer::del_manager(const string& name) throw(ManagerNotExists)
   if ( _manager_exists(name) )
     _manager_map.erase(_manager_map.find(name));
   else
-    throw(_not_exists);
+    throw(new ManagerNotExists() );
 }
 
 void ManagerContainer::select_manager(const string & name) throw(ManagerNotExists)
@@ -35,7 +35,7 @@ void ManagerContainer::select_manager(const string & name) throw(ManagerNotExist
   if ( _manager_exists(name) )
     _manager_map.find(name)->second->set_selected(true);
   else
-    throw(_not_exists);
+    throw(new ManagerNotExists());
 }
 
 void ManagerContainer::select_managers(const vector<string> & list) throw(ManagerNotExists)
@@ -56,7 +56,7 @@ void ManagerContainer::select_managers(const vector<string> & list) throw(Manage
 	}
       catch ( ... )
 	{
-	  throw(_not_exists);
+	  throw(new ManagerNotExists());
 	}
     }
     
@@ -67,7 +67,7 @@ void ManagerContainer::desel_manager(const string & name) throw(ManagerNotExists
   if ( _manager_exists(name) )
     _manager_map.find(name)->second->set_selected(false);
   else
-    throw(_not_exists);
+    throw(new ManagerNotExists());
 }
 
 bool ManagerContainer::check_manager(const string & name) throw(ManagerNotExists)
@@ -75,7 +75,7 @@ bool ManagerContainer::check_manager(const string & name) throw(ManagerNotExists
   if ( _manager_exists(name) )
     return _manager_map.find(name)->second->get_selected();
   else
-    throw(_not_exists);
+    throw(new ManagerNotExists());
 }
 
 
@@ -85,7 +85,7 @@ Manager::connection_t ManagerContainer::connect_client( Manager::signal_t::slot_
   if ( _manager_exists(name) )
     return _manager_map.find(name)->second->connect_client(client);
   else
-    throw( _not_exists );
+    throw(new ManagerNotExists());
 }
 
 void ManagerContainer::disconnect_client(Manager::connection_t client, 
@@ -94,7 +94,7 @@ void ManagerContainer::disconnect_client(Manager::connection_t client,
   if ( _manager_exists(name) )
     return _manager_map.find(name)->second->disconnect_client(client);
   else
-    throw (_not_exists);
+    throw (new ManagerNotExists());
 }
 
 bool ManagerContainer::_manager_exists(const string & name) 

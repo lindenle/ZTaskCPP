@@ -8,11 +8,13 @@
 
 class ManagerExists: public exception
 {
+
   /// describes the error that was encountered
   virtual const char* what() const throw()
   {
     return "Manager exists";
   }
+
 };
 
 /// ManagerNotExists is an exception to throw when a manager does not

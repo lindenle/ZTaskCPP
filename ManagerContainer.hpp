@@ -67,12 +67,6 @@ private:
   /// _manager_map : unique string id key to shared_ptr map. erasing the entry deletes the manager object.
   ManagerMap _manager_map;
 
-  /// _exists : exception to be thrown when a manager exists and shouldn't
-  ManagerExists _exists;
-  
-  ///_not_exists : exception to be thrown when a manger does not exist and should.
-  ManagerNotExists _not_exists;
-
   /// holds the instance of the singleton
   static ManagerContainer * _instance;
 
