@@ -12,3 +12,6 @@ The code produces a library that is called libManagerContainer.so.
 The tmc.cpp code is compiled and linked against this library as an
 example/test of the features in the design.
 
+To generate the documentation do:
+
+$ doxygen doxy.conf
